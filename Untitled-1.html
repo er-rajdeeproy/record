@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calsi</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: grid;
+      place-items: center;
+      font-family: Arial, sans-serif;
+      background: #202124;
+    }
+
+    .calculator {
+      width: 280px;
+      padding: 20px;
+      border-radius: 16px;
+      background: #303134;
+    }
+
+    #display {
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 12px;
+      padding: 15px;
+      font-size: 28px;
+      text-align: right;
+      border: 0;
+      border-radius: 8px;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    button {
+      padding: 18px;
+      font-size: 20px;
+      border: 0;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover { background: #bbb; }
+    .operator { background: #ff9800; color: white; }
+    .equals { background: #4caf50; color: white; }
+    .clear { background: #f44336; color: white; }
+  </style>
+</head>
+<body>
+  <main class="calculator">
+    <h2 style="color:white;text-align:center;">Calsi</h2>
+    <input id="display" readonly>
+
+    <div class="buttons">
+      <button class="clear" onclick="clearDisplay()">C</button>
+      <button onclick="deleteLast()">⌫</button>
+      <button class="operator" onclick="add('/')">÷</button>
+      <button class="operator" onclick="add('*')">×</button>
+
+      <button onclick="add('7')">7</button>
+      <button onclick="add('8')">8</button>
+      <button onclick="add('9')">9</button>
+      <button class="operator" onclick="add('-')">−</button>
+
+      <button onclick="add('4')">4</button>
+      <button onclick="add('5')">5</button>
+      <button onclick="add('6')">6</button>
+      <button class="operator" onclick="add('+')">+</button>
+
+      <button onclick="add('1')">1</button>
+      <button onclick="add('2')">2</button>
+      <button onclick="add('3')">3</button>
+      <button class="equals" onclick="calculate()">=</button>
+
+      <button onclick="add('0')" style="grid-column: span 2;">0</button>
+      <button onclick="add('.')">.</button>
+    </div>
+  </main>
+
+  <script>
+    const display = document.getElementById("display");
+
+    function add(value) {
+      display.value += value;
+    }
+
+    function clearDisplay() {
+      display.value = "";
+    }
+
+    function deleteLast() {
+      display.value = display.value.slice(0, -1);
+    }
+
+    function calculate() {
+      try {
+        display.value = Function(`"use strict"; return (${display.value})`)();
+      } catch {
+        display.value = "Error";
+      }
+    }
+  </script>
+</body>
+</html>
